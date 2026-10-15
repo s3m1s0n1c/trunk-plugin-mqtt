@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.1.7]
+
+- Publish configured P25 `sysid`, `wacn`, and `nac` in the retained MQTT
+  `systems` message. Set these in each system's MQTT plugin settings.
+
 ## [0.1.6]
 
 - Publish raw over-the-air unit aliases as `unit_alpha_tag_ota` alongside the

@@ -399,7 +399,8 @@ pub fn systems(d: &Directory) -> Value {
 
 /// What the recorder is set up with (`config`, retained).
 pub fn config(d: &Directory, capture_dir: &Path, instance_id: &str) -> Value {
-    let systems: Vec<Value> = d.systems.iter().enumerate().map(|(i, (_, name, kind, ..))| json!({ "sys_num": i, "sys_name": name, "system_type": kind })).collect();
+    let systems: Vec<Value> =
+        d.systems.iter().enumerate().map(|(i, (_, name, kind, ..))| json!({ "sys_num": i, "sys_name": name, "system_type": kind })).collect();
     json!({ "systems": systems, "capture_dir": capture_dir.display().to_string(), "instance_id": instance_id })
 }
 
@@ -410,7 +411,11 @@ mod tests {
 
     fn dir() -> Directory {
         Directory {
-            systems: vec![(0, "east".into(), "p25".into(), "2D1".into(), "BEE00".into(), "2D0".into()), (1, "west".into(), "p25".into(), String::new(), String::new(), String::new()), (CONVENTIONAL, "conv".into(), "conventional".into(), String::new(), String::new(), String::new())],
+            systems: vec![
+                (0, "east".into(), "p25".into(), "2D1".into(), "BEE00".into(), "2D0".into()),
+                (1, "west".into(), "p25".into(), String::new(), String::new(), String::new()),
+                (CONVENTIONAL, "conv".into(), "conventional".into(), String::new(), String::new(), String::new()),
+            ],
             ..Default::default()
         }
     }
@@ -449,7 +454,10 @@ mod tests {
         assert_eq!(v["elapsed"], 3);
         assert_eq!(v["conventional"], true);
         let keys: Vec<&str> = v.as_object().unwrap().keys().map(|k| k.as_str()).collect();
-        assert_eq!(&keys[..10], ["id", "call_num", "sys_num", "sys_name", "freq", "unit", "unit_alpha_tag", "unit_alpha_tag_ota", "talkgroup", "talkgroup_alpha_tag"]);
+        assert_eq!(
+            &keys[..10],
+            ["id", "call_num", "sys_num", "sys_name", "freq", "unit", "unit_alpha_tag", "unit_alpha_tag_ota", "talkgroup", "talkgroup_alpha_tag"]
+        );
     }
 
     #[test]
